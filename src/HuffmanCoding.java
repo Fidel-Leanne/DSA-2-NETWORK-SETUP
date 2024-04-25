@@ -65,6 +65,34 @@ public class HuffmanCoding {
         buildCodes(root.right, code + '1');
     }
 
+    public static String compress(String message) {
+        StringBuilder compressedMessage = new StringBuilder();
+        for (char c : message.toCharArray()) {
+            compressedMessage.append(characterToCode.get(c));
+        }
+        return compressedMessage.toString();
+    }
+
+    public static String decompress(String compressedMessage) {
+        StringBuilder decompressedMessage = new StringBuilder();
+        StringBuilder code = new StringBuilder();
+        for (char bit : compressedMessage.toCharArray()) {
+            code.append(bit);
+            if (codeToCharacter.containsKey(code.toString())) {
+                decompressedMessage.append(codeToCharacter.get(code.toString()));
+                code = new StringBuilder();
+            }
+        }
+        return decompressedMessage.toString();
+    }
+
+    // Method to print Huffman codes associated with each character
+    public static void printHuffmanCodes() {
+        for (Map.Entry<Character, String> entry : characterToCode.entrySet()) {
+            System.out.println("Character: " + entry.getKey() + ", Huffman Code: " + entry.getValue());
+        }
+    }
+
 
 
 
