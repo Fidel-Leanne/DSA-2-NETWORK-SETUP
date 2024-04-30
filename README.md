@@ -80,8 +80,8 @@ The other operations, such as generating Huffman codes, compressing and decompre
 Therefore, the overall time complexity of the Huffman coding algorithm is O(n log n) for building the tree, and linear for other operations.
 
 
-how to run the code 
+6.How to run the code 
 
-First run the serverNode in one terminal
-then open another terminal to run the ClientNode
-then open another terminal and run the ClientNode
+First run the serverNode in one terminal.
+Then open another terminal to run the ClientNode.
+Then open another terminal and run the ClientNode
