@@ -2,9 +2,9 @@ Assignment Documentation: Modeling a Star Topology Network
 
 1. Overview:
 
-This document outlines the implementation of a star topology network using socket programming. 
+0utline of the implementation of a star topology network using socket programming. 
 The assignment required modeling a star topology network with a central node (server) and peripheral nodes (clients), where the central node brokers messages between the peripheral nodes.
-Additionally, the implementation serves as a chatroom, enabling communication between connected clients.
+the implementation serves as a chatroom, enabling communication between connected clients.
 
 2. Implementation:
 
