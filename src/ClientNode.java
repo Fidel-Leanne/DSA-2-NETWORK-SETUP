@@ -1,50 +1,43 @@
-public class ClientNode {
-    private String id;
-    private ServerNode serverNode;
-    private boolean huffmanTreeBuilt = false;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
-    public ClientNode(String id) {
-        this.id = id;
-    }
+public class ClientNode implements Runnable {
 
-    public String getId() {
-        return id;
-    }
+    private Socket client;
+    private BufferedReader in;
+    private PrintWriter out;
+    private boolean done;
 
-    // Method to set the server node for the client
-    public void setServerNode(ServerNode serverNode) {
-        this.serverNode = serverNode;
-    }
+    @Override
+    public void run() {
+        try {
+            client = new Socket("127.0.0.1", 9999);
+            out = new PrintWriter(client.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-    // Method to send message to the server node with Huffman codes
-    public void sendWithHuffmanCodes(String message) {
-        // Ensure Huffman tree is built before sending message
-        if (!huffmanTreeBuilt) {
-            HuffmanCoding.buildHuffmanTree(message);
-            huffmanTreeBuilt = true;
-        }
+            Thread inputThread = new Thread(new InputHandler());
+            inputThread.start();
 
-        // Compress the message using Huffman coding
-        String compressedMessage = HuffmanCoding.compress(message);
-        System.out.println("Compressed message for " + id + ": " + compressedMessage);
-
-        // Print Huffman codes associated with each character
-        System.out.println("Huffman codes for " + id + ":");
-        HuffmanCoding.printHuffmanCodes();
-
-        // Send compressed message to the server node
-        if (serverNode != null) {
-            serverNode.brokerMessage(this, compressedMessage);
-        } else {
-            System.out.println("Client " + id + " is not connected to any server.");
+            String inMessage;
+            while ((inMessage = in.readLine()) != null) {
+                System.out.println(inMessage);
+            }
+        } catch (IOException e) {
+            shutdown();
         }
     }
 
-    // Method to receive message from the server node
-    public void receive(String sender, String message) {
-        // Decompress the message using Huffman coding
-        String decompressedMessage = HuffmanCoding.decompress(message);
-        System.out.println("Message received by " + id + " from " + sender + ": " + decompressedMessage);
+    public void shutdown() {
+        done = true;
+        try {
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (client != null && !client.isClosed()) client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }
