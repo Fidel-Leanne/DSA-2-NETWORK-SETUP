@@ -39,5 +39,36 @@ public class ClientNode implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    } 
+    
+    class InputHandler implements Runnable {
+        @Override
+        public void run() {
+            try {
+                BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
+                while (!done) {
+                    String message = inReader.readLine();
+                    if (message.equals("/quit")) {
+                        shutdown();
+                        break;
+                    } else {
+                        out.println(message);
+                    }
+                }
+                inReader.close();
+            } catch (IOException e) {
+                shutdown();
+            }
+        }
     }
+
+    public static void main(String[] args) {
+        ClientNode clientNode = new ClientNode();
+        Thread clientThread = new Thread(clientNode);
+        clientThread.start();
+    }
+}
+
+
+    
 }
