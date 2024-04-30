@@ -28,6 +28,7 @@ The ClientNode class represents the peripheral nodes (clients) in the star topol
 Each ClientNode object establishes a socket connection with the central node (server) to communicate.
 It has methods to send messages to the server and receive messages from the server. 
 When sending a message, it communicates with the server, which in turn broadcasts the message to all other connected clients.
+A client can be removed by typing /quit 
 
 2.3. Chatroom Functionality:
 
@@ -47,3 +48,40 @@ The central node (server) acts as a hub, receiving messages from one client and 
 4. Conclusion:
 
 In conclusion, the implementation effectively models a star topology network using socket programming concepts while also functioning as a chatroom. The central node (server) and peripheral nodes (clients) interact to simulate the communication patterns observed in a star topology network, while the chatroom functionality enables real-time communication between connected clients.
+
+5 why we would choose huffman encoding
+
+
+Efficient Compression: 
+It generates variable-length codes that minimize redundancy in the data, leading to optimal compression ratios.
+
+Fast Processing: 
+Huffman encoding and decoding are simple and efficient processes, making it suitable for real-time compression and decompression tasks .
+
+Lossless Compression:
+Huffman encoding preserves all original data during compression and decompression, ensuring data integrity in our chat rom.
+
+5.1
+
+The overall time complexity of the Huffman coding algorithm can be summarized as:
+
+Building the Huffman Tree: O(n log n)
+Generating Huffman Codes: O(n)
+Compressing a Message: O(m)
+Decompressing a Message: O(m)
+Printing Huffman Codes: O(n)
+
+Where:
+n is the number of unique characters in the input message.
+m is the length of the input message.
+
+The dominant factor in the overall time complexity is building the Huffman tree, which has a time complexity of O(n log n).
+The other operations, such as generating Huffman codes, compressing and decompressing messages, and printing Huffman codes, have linear time complexities .
+Therefore, the overall time complexity of the Huffman coding algorithm is O(n log n) for building the tree, and linear for other operations.
+
+
+how to run the code 
+
+First run the serverNode in one terminal
+then open another terminal to run the ClientNode
+then open another terminal and run the ClientNode
